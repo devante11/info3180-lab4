@@ -49,6 +49,11 @@ def upload():
 
     return render_template('upload.html')
 
+@app.route("/uploads/<filename>")
+def get_image(filename):
+    root_dir = os.getcwd()
+    return send_from_directory(os.path.join(root_dir, app.config['UPLOAD_FOLDER']), filename)
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -80,6 +85,25 @@ def files():
     return render_template("files.html", photos=get_upload_images())
 
 
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    photos = []
+    for subdir, dirs, files in os.walk(rootdir + app.config['UPLOAD_FOLDER'][1:]):
+
+        for file in files:
+
+            photos.append(os.path.join(app.config['UPLOAD_FOLDER'][21:], file))
+            photos.sort()
+            del photos[0]
+            return photos
+
+@app.route('/files')
+def files():
+    if not session.get('logged_in'):
+        abort(401)
+     photolist = get_uploaded_images()
+     print photolist
+     return render_template('files.html', photos = photolist)
 ###
 # The functions below should be applicable to all Flask apps.
 ###

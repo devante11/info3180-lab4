@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="img-main">
+{% for img in photos %}
+
+<div class="img-layout">
+
+    <ul>
+            <img src ="{{ url_for('get_image', filename= image ) }}" />
+    </ul>
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
