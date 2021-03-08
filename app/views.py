@@ -117,6 +117,33 @@ def flash_errors(form):
                 error
 ), 'danger')
 
+
+@app.route("/logout")
+
+@login_required
+
+def logout():
+
+
+
+    # Logout the user and end the session
+
+
+
+    logout_user()
+
+
+
+    flash('You have been logged out.', 'danger')
+
+
+
+    return redirect(url_for('home'))
+
+
+
+
+
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
     """Send your static text file."""
